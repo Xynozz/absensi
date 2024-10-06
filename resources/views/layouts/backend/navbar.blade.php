@@ -6,6 +6,8 @@
         </a>
     </div>
 @guest
+
+@else
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
         <!-- Search -->
         {{-- <div class="navbar-nav align-items-center">
@@ -17,10 +19,8 @@
         </div> --}}
         <!-- /Search -->
 
-        @else
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- Place this tag where you want the button to render. -->
-
 
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">

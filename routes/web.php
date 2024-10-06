@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\CutiController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\JabatanController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,15 +18,20 @@ use App\Http\Controllers\KaryawanController;
 
 Auth::routes();
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route admin
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::resource('karyawan', KaryawanController::class);
     Route::resource('absensi', AbsensiController::class);
-    // Route::resource('jabatan', JabatanController::class);
+    Route::resource('jabatan', JabatanController::class);
 });
 
 Route::group(['prefix' => 'karyawan'], function () {
-    Route::resource('absensi', AbsensiController::class);
+    Route::get('absensi', [AbsensiController::class, 'create']);
+    Route::get('cuti', [CutiController::class, 'create']);
 });

@@ -4,6 +4,7 @@
 <head>
     <title>PT Tritama</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="{{ asset('template/assets/vendor/css/core.css') }}"
         class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('template/assets/vendor/css/theme-default.css') }}"
@@ -26,7 +27,7 @@
             flex-direction: row;
         }
 
-        .attendance-form {
+        .cuti-form {
             flex: 1;
             margin: 20px;
             padding: 20px;
@@ -35,7 +36,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .attendance-list {
+        .cuti-list {
             flex: 2;
             margin: 20px;
             padding: 20px;
@@ -74,51 +75,59 @@
         <h1>PT Tritama</h1>
     </header>
     <main>
-        <section class="attendance-form">
-            <h2>Absen</h2>
+        <section class="cuti-form">
+            <h2>Ajukan Cuti</h2>
             <form>
                 <div class="row mb-4">
-                    <div class="col-12">
-                        <label class="form-label" for="basic-default-fullname">Nama Karyawan</label>
-                        <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example"
-                            name="karyawan_id">
-                            <option selected disabled>-- Nama Karyawan --</option>
-                            @foreach ($karyawan as $data)
-                            <option value="{{$data->id}}">{{$data->nama_karyawan}}</option>
-                            @endforeach
+                    <div class="col-12 mt-2">
+                        <label class="form-label" for="employee-id">Employee ID:</label>
+                        <input class="form-control" type="number" id="employee-id" name="employee-id">
+                    </div>
+                    <div class="col-12 mt-2">
+                        <label class="form-label" for="jenis-cuti">Jenis Cuti:</label>
+                        <select class="form-control" id="jenis-cuti" name="jenis-cuti">
+                            <option value="cuti-tahunan">Cuti Tahunan</option>
+                            <option value="cuti-sakit">Cuti Sakit</option>
+                            <option value="cuti-melahirkan">Cuti Melahirkan</option>
                         </select>
                     </div>
+                    <div class="col-12 mt-2">
+                        <label class="form-label" for="tanggal-mulai">Tanggal Mulai:</label>
+                        <input class="form-control" type="date" id="tanggal-mulai" name="tanggal-mulai">
+                    </div>
+                    <div class="col-12 mt-2">
+                        <label class="form-label" for="tanggal-akhir">Tanggal Akhir:</label>
+                        <input class="form-control" type="date" id="tanggal-akhir" name="tanggal-akhir">
+                    </div>
+                    <div class="col-12 mt-2">
+                        <label class="form-label" for="alasan">Alasan:</label>
+                        <textarea class="form-control" id="alasan" name="alasan"></textarea>
+                    </div>
                 </div>
-
-                <!-- Tombol Absen Masuk -->
-                <button type="submit" name="absen_masuk" class="btn btn-primary" {{ session('absen_masuk') ? '' : '' }}>
-                    Absen Masuk </button>
-
-                <!-- Tombol Absen Pulang -->
-                <button type="submit" name="absen_pulang" class="btn btn-secondary" {{ !session('absen_masuk')
-                    ? 'disabled' : '' }}> Absen Pulang </button>
+                <button type="submit" class="btn btn-primary" value="Ajukan Cuti">Ajukan Cuti</button>
             </form>
         </section>
-        <section class="attendance-list">
-            <h2>Daftar Absensi</h2>
+        <section class="cuti-list">
+            <h2>Daftar Cuti</h2>
             <table>
                 <thead>
                     <tr>
                         <th>Employee ID</th>
-                        <th>Date</th>
+                        <th>Jenis Cuti</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Akhir</th>
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- attendance list will be displayed here -->
+                    <!-- daftar cuti akan ditampilkan disini -->
                 </tbody>
             </table>
         </section>
     </main>
     <footer>
-        <p>&copy; 2023 Attendance System</p>
+        <p>&copy; 2023 Cuti System</p>
     </footer>
 </body>
 
 </html>
-{{-- @endsection --}}

@@ -15,7 +15,9 @@ class JabatanController extends Controller
      */
     public function index()
     {
-        //
+        $jabatan = Jabatan::all();
+
+        return view('jabatan.index', compact('jabatan'));
     }
 
     /**
@@ -25,7 +27,7 @@ class JabatanController extends Controller
      */
     public function create()
     {
-        //
+        return view('jabatan.create');
     }
 
     /**
@@ -36,7 +38,17 @@ class JabatanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'jabatan' => 'required|string|max:255',
+        ]);
+
+        $jabatan = new Jabatan();
+        $jabatan->jabatan = $request->jabatan;
+        $jabatan->save();
+
+
+        return redirect()->route('jabatan.index')
+            ->with('success', 'Jabatan created successfully');
     }
 
     /**

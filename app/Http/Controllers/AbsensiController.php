@@ -7,6 +7,7 @@ use App\Models\Karyawan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 class AbsensiController extends Controller
 {
@@ -45,7 +46,27 @@ class AbsensiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_karyawan' => 'required',
+            'jam_masuk' => 'required',
+            'jam_pulang' => 'required',
+            'keterangan' => 'required',
+        ]);
+
+        $absensi = new Absensi();
+        $absensi->id_karyawan = $request->id_karyawan;
+        $absensi->tanggal = date('Y-m-d');
+
+        if ($request->has('jam_masuk')) {
+            $absensi->jam_masuk = date('H:i:s');
+            $absensi->jam_pulang = null;
+        } elseif ($request->has('jam_pulang')) {
+            $absensi->jam_pulang = date('H:i:s');
+        }
+
+        $absensi->save();
+
+        return redirect()->back()->with('success', 'Absensi berhasil disimpan!');
     }
 
     /**

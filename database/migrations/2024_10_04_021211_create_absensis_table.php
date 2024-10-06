@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('tanggal');
             $table->time('jam_masuk')->nullable();
             $table->time('jam_pulang')->nullable();
-            $table->string('keterangan');
             $table->timestamps();
 
             $table->foreign('id_karyawan')->references('id')->on('karyawans')->onDelete('cascade');

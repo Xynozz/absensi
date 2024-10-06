@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
+use App\Models\Jabatan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,10 @@ class KaryawanController extends Controller
      */
     public function index()
     {
-        $karyawan = Karyawan::all();
-        return view('karyawan.index', compact('karyawan'));
+        $karyawan = Karyawan::Latest()->get();
+        $jabatan = Jabatan::all();
+
+        return view('karyawan.index', compact('karyawan','jabatan'));
     }
 
     /**
@@ -26,7 +29,8 @@ class KaryawanController extends Controller
      */
     public function create()
     {
-        //
+        $jabatan = Jabatan::all();
+        return view('karyawan.create', compact('jabatan'));
     }
 
     /**
@@ -37,7 +41,22 @@ class KaryawanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nama_karyawan' => 'required',
+            'alamat' => 'required',
+            'jenis_kelamin' => 'required',
+            'id_jabatan' => 'required',
+        ]);
+
+        $karyawan = new Karyawan();
+        $karyawan->nama_karyawan = $request->nama_karyawan;
+        $karyawan->alamat = $request->alamat;
+        $karyawan->jenis_kelamin = $request->jenis_kelamin;
+        $karyawan->id_jabatan = $request->id_jabatan;
+        $karyawan->save();
+
+        return redirect()->route('karyawan.index')
+        ->with('success', 'Jabatan created successfully');
     }
 
     /**
